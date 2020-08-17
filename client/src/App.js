@@ -23,17 +23,24 @@ const App = () => {
   }, []);
 
   const addToSavedList = id => {
+    if (saved.find(item => item.id == id) === undefined) {
+      setSaved([...saved, movieList.find(movie => movie.id == id)]);
+    }
+    // This is yelling at me about how == isn't ===
+    // Like.. I know?
     // This is stretch. Prevent the same movie from being "saved" more than once
+    
   };
+  
 
   return (
     <div>
-      <SavedList list={[ /* This is stretch */]} />
+      <SavedList list={saved} />
       <Route exact path='/'>
         <MovieList movies={movieList} />
       </Route>
       <Route path='/movies/:id/'>
-        <Movie />
+        <Movie addToSavedList={addToSavedList} />
       </Route>
     </div>
   );
